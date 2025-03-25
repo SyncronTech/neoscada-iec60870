@@ -198,7 +198,7 @@ public class SineDataModel extends AbstractBaseDataModel
         final MessageBuilder<Float, ?> builder = BUILDER.create ();
         builder.start ( CauseOfTransmission.BACKGROUND, ASDU_ADDRESS );
 
-        while ( builder.addEntry ( new InformationObjectAddress ( this.startAddress.getAddress () + position ), this.values.get ( position ) ) )
+        while ( position < this.size && builder.addEntry ( new InformationObjectAddress ( this.startAddress.getAddress () + position ), this.values.get ( position ) ) )
         {
             position++;
         }
