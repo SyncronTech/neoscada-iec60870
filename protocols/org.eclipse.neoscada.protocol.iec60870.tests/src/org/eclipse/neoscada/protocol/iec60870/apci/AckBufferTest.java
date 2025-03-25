@@ -73,8 +73,8 @@ public class AckBufferTest
     {
         for ( int i = 0; i < 1000; i++ )
         {
-            addMessage ( i % MAX_SEQUENCE, 1 );
-            gotAck ( ( i + 1 ) % MAX_SEQUENCE, 0 );
+            addMessage ( i % (MAX_SEQUENCE+1), 1 );
+            gotAck ( ( i + 1 ) % (MAX_SEQUENCE+1), 0 );
         }
     }
 

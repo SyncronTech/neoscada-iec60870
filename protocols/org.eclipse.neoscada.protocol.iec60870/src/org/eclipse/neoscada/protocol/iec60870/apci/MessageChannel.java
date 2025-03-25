@@ -203,7 +203,12 @@ public class MessageChannel extends ChannelDuplexHandler
 
             incrementReceiveCounter ();
 
-            if ( this.receiveCounter - this.ackSentCounter >= this.options.getAcknowledgeWindow () )
+            int unackedCount = this.receiveCounter - this.ackSentCounter;
+            
+            if (unackedCount < 0)
+            	unackedCount =  unackedCount + (1 + this.options.getMaxSequenceNumber());       	
+            
+            if ( unackedCount >= this.options.getAcknowledgeWindow () )
             {
                 // send S format right now
                 this.timer2.stop (); // just in case the timer was already started
