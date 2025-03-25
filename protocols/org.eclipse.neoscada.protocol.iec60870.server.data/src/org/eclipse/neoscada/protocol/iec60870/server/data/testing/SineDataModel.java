@@ -97,7 +97,7 @@ public class SineDataModel extends AbstractBaseDataModel
     @Override
     public ListenableFuture<Value<?>> read ( final ASDUAddress asduAddress, final InformationObjectAddress address )
     {
-        if ( ASDU_ADDRESS.equals ( asduAddress.getAddress () ) )
+        if ( ASDU_ADDRESS.equals ( asduAddress ) )
         {
             return null;
         }
