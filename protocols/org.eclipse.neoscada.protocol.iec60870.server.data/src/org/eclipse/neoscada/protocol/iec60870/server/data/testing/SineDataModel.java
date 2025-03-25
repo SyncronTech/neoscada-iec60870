@@ -74,6 +74,12 @@ public class SineDataModel extends AbstractBaseDataModel
             this.values.add ( new Value<> ( 0.0f, System.currentTimeMillis (), QualityInformation.INVALID ) );
         }
 
+    }
+
+    @Override
+    public synchronized void start() {
+    
+    	super.start();
         this.executor.scheduleAtFixedRate ( new Runnable () {
 
             @Override
@@ -83,7 +89,7 @@ public class SineDataModel extends AbstractBaseDataModel
             }
         }, 0, 250, TimeUnit.MILLISECONDS );
     }
-
+    
     protected synchronized void update ()
     {
         final long tix = System.currentTimeMillis ();
