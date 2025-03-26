@@ -143,7 +143,7 @@ public class Dumper
             try
             {
                 boolean changed = false;
-                if ( !field.isAccessible () )
+                if ( !field.canAccess (object) )
                 {
                     changed = true;
                     field.setAccessible ( true );
