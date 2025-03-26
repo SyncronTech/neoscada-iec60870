@@ -34,7 +34,7 @@ public class SetPointCommandNormalizedValueTime extends AbstractSetPointCommandN
     {
         final InformationObjectAddress address = InformationObjectAddress.parse ( options, data );
 
-        final short value = data.readShort ();
+        final short value = data.readShortLE ();
 
         final byte b = data.readByte ();
 

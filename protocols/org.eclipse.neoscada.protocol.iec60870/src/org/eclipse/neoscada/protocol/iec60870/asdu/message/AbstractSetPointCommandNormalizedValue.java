@@ -53,7 +53,7 @@ public abstract class AbstractSetPointCommandNormalizedValue extends AbstractInf
 
         this.informationObjectAddress.encode ( options, out );
 
-        out.writeShort ( (short) ( this.value.getValue () * 32768 ) );
+        out.writeShortLE ( (short) ( this.value.getValue () * 32768 ) );
 
         byte b = 0;
 

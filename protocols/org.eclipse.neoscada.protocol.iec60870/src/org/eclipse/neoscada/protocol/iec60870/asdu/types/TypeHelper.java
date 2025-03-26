@@ -45,7 +45,7 @@ public class TypeHelper
             }
         }
 
-        out.writeShort ( ms );
+        out.writeShortLE ( ms );
         out.writeByte ( minutes ); // we implicitly set "valid"
         out.writeByte ( hourField );
         out.writeByte ( dayOfMonth ); // we implicitly set dayOfWeek to zero here
@@ -55,7 +55,7 @@ public class TypeHelper
 
     public static long parseTimestamp ( final ProtocolOptions options, final ByteBuf data )
     {
-        final int ms = data.readUnsignedShort ();
+        final int ms = data.readUnsignedShortLE ();
 
         int minutes = data.readUnsignedByte ();
         minutes = minutes & 0b00111111; // mask out IV and RES1
@@ -169,7 +169,7 @@ public class TypeHelper
         final byte qds = (byte) ( value.isOverflow () ? 0b00000001 : 0b00000000 );
         final byte siq = value.getQualityInformation ().apply ( qds );
 
-        out.writeFloat ( value.getValue () );
+        out.writeFloatLE ( value.getValue () );
         out.writeByte ( siq );
 
         if ( withTimestamp )
@@ -183,7 +183,7 @@ public class TypeHelper
      */
     public static Value<Float> parseFloatValue ( final ProtocolOptions options, final ByteBuf data, final boolean withTimestamp )
     {
-        final float value = data.readFloat ();
+        final float value = data.readFloatLE ();
 
         final byte qds = data.readByte ();
 
@@ -203,7 +203,7 @@ public class TypeHelper
         final byte qds = (byte) ( value.isOverflow () ? 0b00000001 : 0b00000000 );
         final byte siq = value.getQualityInformation ().apply ( qds );
 
-        out.writeShort ( value.getValue () );
+        out.writeShortLE ( value.getValue () );
         out.writeByte ( siq );
 
         if ( withTimestamp )
@@ -217,7 +217,7 @@ public class TypeHelper
      */
     public static Value<Short> parseScaledValue ( final ProtocolOptions options, final ByteBuf data, final boolean withTimestamp )
     {
-        final short value = data.readShort ();
+        final short value = data.readShortLE ();
 
         final byte qds = data.readByte ();
 
@@ -255,7 +255,7 @@ public class TypeHelper
         final byte qds = (byte) ( ( value.isOverflow () || isOverflow ) ? 0b00000001 : 0b00000000 );
         final byte siq = value.getQualityInformation ().apply ( qds );
 
-        out.writeShort ( normalizedValue );
+        out.writeShortLE ( normalizedValue );
         out.writeByte ( siq );
 
         if ( withTimestamp )
@@ -269,7 +269,7 @@ public class TypeHelper
      */
     public static Value<Double> parseNormalizedValue ( final ProtocolOptions options, final ByteBuf data, final boolean withTimestamp )
     {
-        final short value = data.readShort ();
+        final short value = data.readShortLE ();
 
         final byte qds = data.readByte ();
 

@@ -43,7 +43,7 @@ public class SetPointCommandShortFloatingPoint extends AbstractSetPointCommandSh
     {
         final InformationObjectAddress address = InformationObjectAddress.parse ( options, data );
 
-        final float value = data.readFloat ();
+        final float value = data.readFloatLE ();
 
         final byte b = data.readByte ();
 

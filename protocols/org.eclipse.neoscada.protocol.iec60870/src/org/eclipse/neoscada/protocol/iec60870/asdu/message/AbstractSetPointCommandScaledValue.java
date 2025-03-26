@@ -49,7 +49,7 @@ public abstract class AbstractSetPointCommandScaledValue extends AbstractInforma
 
         this.informationObjectAddress.encode ( options, out );
 
-        out.writeShort ( this.value.getValue () );
+        out.writeShortLE ( this.value.getValue () );
 
         byte b = 0;
 

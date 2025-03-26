@@ -10,14 +10,9 @@
  *******************************************************************************/
 package org.eclipse.neoscada.protocol.iec60870.asdu;
 
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufUtil;
-import io.netty.buffer.Unpooled;
-
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
-import java.nio.ByteOrder;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -34,6 +29,10 @@ import org.eclipse.neoscada.protocol.iec60870.asdu.types.InformationStructure;
 import org.eclipse.neoscada.protocol.iec60870.asdu.types.StandardCause;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
 
 public class MessageManager
 {
@@ -172,7 +171,6 @@ public class MessageManager
 
         try
         {
-            buf = buf.order ( ByteOrder.LITTLE_ENDIAN );
             codec.encode ( this.options, msg, buf );
             logger.debug ( "Encoded to {} bytes", buf.writerIndex () );
         }
