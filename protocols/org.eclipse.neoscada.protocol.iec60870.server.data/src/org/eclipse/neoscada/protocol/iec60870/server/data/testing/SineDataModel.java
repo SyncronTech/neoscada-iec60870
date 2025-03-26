@@ -138,16 +138,16 @@ public class SineDataModel extends AbstractBaseDataModel
             @Override
             public Void call () throws Exception
             {
-                return performReadAll ( listener );
+                return performReadAll ( listener, cause );
             }
         } );
     }
 
-    protected synchronized Void performReadAll ( final DataListener listener )
+    protected synchronized Void performReadAll ( final DataListener listener, CauseOfTransmission cause )
     {
         logger.debug ( "performReadAll" );
 
-        listener.dataChangeFloat ( CauseOfTransmission.SPONTANEOUS, ASDU_ADDRESS, this.startAddress, new ArrayList<> ( this.values ) );
+        listener.dataChangeFloat ( cause, ASDU_ADDRESS, this.startAddress, new ArrayList<> ( this.values ) );
 
         logger.debug ( "performReadAll - done" );
         return null;
