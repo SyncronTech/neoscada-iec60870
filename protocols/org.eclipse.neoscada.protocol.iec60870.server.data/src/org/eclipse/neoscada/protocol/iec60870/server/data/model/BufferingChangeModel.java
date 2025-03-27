@@ -74,7 +74,7 @@ public class BufferingChangeModel implements ChangeModel
             this.cache.put ( asduAddress, asduCache );
         }
 
-        if ( asduCache.containsKey ( value ) )
+        if ( asduCache.containsKey ( informationObjectAddress ) )
         {
             // we would overwrite data, flush immediately
 

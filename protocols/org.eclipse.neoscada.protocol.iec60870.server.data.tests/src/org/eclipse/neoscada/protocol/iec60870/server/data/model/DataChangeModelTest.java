@@ -115,7 +115,7 @@ public class DataChangeModelTest
         this.model.start ();
 
         final MockMirrorCommand mirrorCommand = new MockMirrorCommand ();
-        this.model.writeValue ( new ASDUHeader ( CauseOfTransmission.REQUEST, ASDUAddress.valueOf ( 1 ) ), InformationObjectAddress.valueOf ( 1 ), new CommandValue<Float> ( 1.2f, System.currentTimeMillis () ), (byte)0, mirrorCommand, true );
+        this.model.writeValue ( new ASDUHeader ( CauseOfTransmission.REQUEST, ASDUAddress.valueOf ( 1 ) ), InformationObjectAddress.valueOf ( 1000 ), new CommandValue<Float> ( 1.2f, System.currentTimeMillis () ), (byte)0, mirrorCommand, true );
 
         this.model.stop ().await ();
 

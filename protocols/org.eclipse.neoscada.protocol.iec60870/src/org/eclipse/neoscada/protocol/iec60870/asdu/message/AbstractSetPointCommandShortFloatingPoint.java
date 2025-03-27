@@ -49,7 +49,7 @@ public abstract class AbstractSetPointCommandShortFloatingPoint extends Abstract
 
         this.informationObjectAddress.encode ( options, out );
 
-        out.writeFloat ( this.value.getValue () );
+        out.writeFloatLE ( this.value.getValue () );
 
         byte b = 0;
 

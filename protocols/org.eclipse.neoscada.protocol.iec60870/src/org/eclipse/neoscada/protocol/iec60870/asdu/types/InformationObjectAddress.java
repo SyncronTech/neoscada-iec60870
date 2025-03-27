@@ -104,7 +104,7 @@ public class InformationObjectAddress
     public int[] toArray ()
     {
         final ByteBuf buf = Unpooled.buffer ( 4 );
-        buf.writeMedium ( this.address );
+        buf.writeMediumLE ( this.address );
         return new int[] { buf.getUnsignedByte ( 0 ), buf.getUnsignedByte ( 1 ), buf.getUnsignedByte ( 2 ) };
     }
 

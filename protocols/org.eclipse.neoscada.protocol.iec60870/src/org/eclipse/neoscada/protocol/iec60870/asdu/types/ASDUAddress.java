@@ -88,7 +88,7 @@ public class ASDUAddress
     public int[] toArray ()
     {
         final ByteBuf buf = Unpooled.buffer ( 2 );
-        buf.writeShort ( this.address );
+        buf.writeShortLE ( this.address );
         return new int[] { buf.getUnsignedByte ( 0 ), buf.getUnsignedByte ( 1 ) };
     }
 

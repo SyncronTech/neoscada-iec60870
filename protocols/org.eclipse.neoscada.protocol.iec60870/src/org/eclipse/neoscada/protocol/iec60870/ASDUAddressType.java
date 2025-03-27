@@ -39,13 +39,13 @@ public enum ASDUAddressType
         @Override
         public int read ( final ByteBuf data )
         {
-            return data.readUnsignedShort ();
+            return data.readUnsignedShortLE ();
         }
 
         @Override
         public void write ( final int address, final ByteBuf out )
         {
-            out.writeShort ( address );
+            out.writeShortLE ( address );
         }
     };
 

@@ -1,4 +1,7 @@
-Eclipse NeoSCADA
-================
+Fork of Eclipse NeoSCADA to maintain iec60870 protocols
+=======================================================
 
-[![Build Status](https://travis-ci.org/eclipse/neoscada.svg?branch=master)](https://travis-ci.org/eclipse/neoscada)
+This is a fork of NeoSCADA. It is otherwise as left by the project,
+except for iec60870 protocol, which we have maintained due to our
+own needs. This is nothing major, just a bunch of small fixes.
+

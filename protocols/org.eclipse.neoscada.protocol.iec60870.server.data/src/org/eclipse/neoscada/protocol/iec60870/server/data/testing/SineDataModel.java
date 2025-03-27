@@ -74,6 +74,12 @@ public class SineDataModel extends AbstractBaseDataModel
             this.values.add ( new Value<> ( 0.0f, System.currentTimeMillis (), QualityInformation.INVALID ) );
         }
 
+    }
+
+    @Override
+    public synchronized void start() {
+    
+    	super.start();
         this.executor.scheduleAtFixedRate ( new Runnable () {
 
             @Override
@@ -83,7 +89,7 @@ public class SineDataModel extends AbstractBaseDataModel
             }
         }, 0, 250, TimeUnit.MILLISECONDS );
     }
-
+    
     protected synchronized void update ()
     {
         final long tix = System.currentTimeMillis ();
@@ -97,7 +103,7 @@ public class SineDataModel extends AbstractBaseDataModel
     @Override
     public ListenableFuture<Value<?>> read ( final ASDUAddress asduAddress, final InformationObjectAddress address )
     {
-        if ( ASDU_ADDRESS.equals ( asduAddress.getAddress () ) )
+        if ( ASDU_ADDRESS.equals ( asduAddress ) )
         {
             return null;
         }
@@ -132,16 +138,16 @@ public class SineDataModel extends AbstractBaseDataModel
             @Override
             public Void call () throws Exception
             {
-                return performReadAll ( listener );
+                return performReadAll ( listener, cause );
             }
         } );
     }
 
-    protected synchronized Void performReadAll ( final DataListener listener )
+    protected synchronized Void performReadAll ( final DataListener listener, CauseOfTransmission cause )
     {
         logger.debug ( "performReadAll" );
 
-        listener.dataChangeFloat ( CauseOfTransmission.SPONTANEOUS, ASDU_ADDRESS, this.startAddress, new ArrayList<> ( this.values ) );
+        listener.dataChangeFloat ( cause, ASDU_ADDRESS, this.startAddress, new ArrayList<> ( this.values ) );
 
         logger.debug ( "performReadAll - done" );
         return null;
@@ -192,7 +198,7 @@ public class SineDataModel extends AbstractBaseDataModel
         final MessageBuilder<Float, ?> builder = BUILDER.create ();
         builder.start ( CauseOfTransmission.BACKGROUND, ASDU_ADDRESS );
 
-        while ( builder.addEntry ( new InformationObjectAddress ( this.startAddress.getAddress () + position ), this.values.get ( position ) ) )
+        while ( position < this.size && builder.addEntry ( new InformationObjectAddress ( this.startAddress.getAddress () + position ), this.values.get ( position ) ) )
         {
             position++;
         }

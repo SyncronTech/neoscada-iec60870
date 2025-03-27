@@ -10,19 +10,18 @@
  *******************************************************************************/
 package org.eclipse.neoscada.protocol.iec60870.apci;
 
+import java.util.List;
+
+import org.eclipse.neoscada.protocol.iec60870.apci.UnnumberedControl.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 import io.netty.handler.codec.DecoderException;
-
-import java.nio.ByteOrder;
-import java.util.List;
-
-import org.eclipse.neoscada.protocol.iec60870.apci.UnnumberedControl.Function;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class APDUDecoder extends ByteToMessageDecoder
 {
@@ -71,7 +70,7 @@ public class APDUDecoder extends ByteToMessageDecoder
         final ByteBuf data;
         if ( len > 4 )
         {
-            data = Unpooled.copiedBuffer ( in.readSlice ( len - 4 ) ).order ( ByteOrder.LITTLE_ENDIAN );
+            data = Unpooled.copiedBuffer ( in.readSlice ( len - 4 ) );
         }
         else
         {
@@ -87,14 +86,12 @@ public class APDUDecoder extends ByteToMessageDecoder
     {
         logger.trace ( "Control Fields: {}", ByteBufUtil.hexDump ( controlFields ) );
 
-        controlFields = controlFields.order ( ByteOrder.LITTLE_ENDIAN );
-
         final byte first = controlFields.getByte ( 0 );
         if ( ( first & 0x01 ) == 0 )
         {
             // I format
-            final int sendSequenceNumber = controlFields.readUnsignedShort () >> 1;
-            final int receiveSequenceNumber = controlFields.readUnsignedShort () >> 1;
+            final int sendSequenceNumber = controlFields.readUnsignedShortLE () >> 1;
+            final int receiveSequenceNumber = controlFields.readUnsignedShortLE () >> 1;
             logger.debug ( "S: {}, R: {}", sendSequenceNumber, receiveSequenceNumber );
             return new InformationTransfer ( sendSequenceNumber, receiveSequenceNumber, data );
         }
@@ -102,7 +99,7 @@ public class APDUDecoder extends ByteToMessageDecoder
         {
             // S format
             controlFields.skipBytes ( 2 );
-            final int receiveSequenceNumber = controlFields.readUnsignedShort () >> 1;
+            final int receiveSequenceNumber = controlFields.readUnsignedShortLE () >> 1;
             return new Supervisory ( receiveSequenceNumber );
         }
         else if ( ( first & 0x03 ) == 3 )

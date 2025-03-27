@@ -19,6 +19,9 @@ public final class MockChangeDataModel extends ChangeDataModel
         @Override
         public Action prepareWriteValue ( Request<?> request )
         {
+            if (request.getAddress().getAddress() == 1000) // Simulate failure
+                return null;
+
             return () -> CompletableFuture.completedFuture ( null );
         }
     }

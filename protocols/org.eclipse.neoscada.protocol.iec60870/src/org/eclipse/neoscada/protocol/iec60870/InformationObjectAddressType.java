@@ -33,13 +33,13 @@ public enum InformationObjectAddressType
         @Override
         public int read ( final ByteBuf data )
         {
-            return data.readUnsignedShort ();
+            return data.readUnsignedShortLE ();
         }
 
         @Override
         public void write ( final int address, final ByteBuf out )
         {
-            out.writeShort ( address );
+            out.writeShortLE ( address );
         }
     },
     SIZE_3
@@ -47,13 +47,13 @@ public enum InformationObjectAddressType
         @Override
         public int read ( final ByteBuf data )
         {
-            return data.readUnsignedMedium ();
+            return data.readUnsignedMediumLE ();
         }
 
         @Override
         public void write ( final int address, final ByteBuf out )
         {
-            out.writeMedium ( address );
+            out.writeMediumLE ( address );
         }
     };
 

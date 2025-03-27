@@ -10,16 +10,14 @@
  *******************************************************************************/
 package org.eclipse.neoscada.protocol.iec60870.apci;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.EncoderException;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.util.ReferenceCountUtil;
-
-import java.nio.ByteOrder;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class APDUEncoder extends MessageToByteEncoder<APCIBase>
 {
@@ -54,8 +52,6 @@ public class APDUEncoder extends MessageToByteEncoder<APCIBase>
         final ByteBuf data = msg.getData ();
         try
         {
-            out = out.order ( ByteOrder.LITTLE_ENDIAN );
-
             final int len = data.readableBytes ();
 
             if ( len > Constants.APCI_MAX_DATA_LENGTH )
@@ -66,8 +62,8 @@ public class APDUEncoder extends MessageToByteEncoder<APCIBase>
             out.ensureWritable ( 6 + len );
             out.writeByte ( Constants.START_BYTE );
             out.writeByte ( 4 + len );
-            out.writeShort ( msg.getSendSequenceNumber () << 1 );
-            out.writeShort ( msg.getReceiveSequenceNumber () << 1 );
+            out.writeShortLE ( msg.getSendSequenceNumber () << 1 );
+            out.writeShortLE ( msg.getReceiveSequenceNumber () << 1 );
             out.writeBytes ( data );
         }
         finally
@@ -78,13 +74,11 @@ public class APDUEncoder extends MessageToByteEncoder<APCIBase>
 
     private void handleSFormat ( final Supervisory msg, ByteBuf out )
     {
-        out = out.order ( ByteOrder.LITTLE_ENDIAN );
-
         out.ensureWritable ( 6 );
         out.writeByte ( Constants.START_BYTE );
         out.writeByte ( 4 );
         out.writeBytes ( new byte[] { 0x01, 0x00 } );
-        out.writeShort ( msg.getReceiveSequenceNumber () << 1 );
+        out.writeShortLE ( msg.getReceiveSequenceNumber () << 1 );
     }
 
     private void handleUFormat ( final UnnumberedControl msg, final ByteBuf out )

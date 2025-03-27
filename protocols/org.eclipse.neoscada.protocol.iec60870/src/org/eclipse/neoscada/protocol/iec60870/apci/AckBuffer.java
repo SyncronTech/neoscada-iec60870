@@ -67,7 +67,10 @@ public class AckBuffer
         }
 
         final int seq = this.sequence;
-        this.sequence = ( this.sequence + 1 ) % this.maxSequence;
+        this.sequence = this.sequence + 1;
+        if (this.sequence > this.maxSequence)
+        	this.sequence = 0;
+        
         final int ack = this.sequence;
 
         if ( this.sequence == 0 )
@@ -100,7 +103,7 @@ public class AckBuffer
     {
         logger.trace ( "Ack - {}", sequenceNumber );
 
-        if ( sequenceNumber % this.maxSequence == this.ackSequence )
+        if ( sequenceNumber == this.ackSequence )
         {
             // duplicate
             return;
@@ -125,7 +128,9 @@ public class AckBuffer
 
         this.buffer[this.ackIndex].clear ();
         this.ackIndex = ( this.ackIndex + 1 ) % this.buffer.length;
-        this.ackSequence = sequenceNumber % this.maxSequence;
+        this.ackSequence = sequenceNumber;
+        if (this.ackSequence > this.maxSequence)
+        	this.ackSequence = 0;
     }
 
     public int getOutstandingAcks ()
@@ -137,7 +142,7 @@ public class AckBuffer
         else
         {
             // we do have a roll over
-            return this.maxSequence - this.ackSequence + this.sequence;
+            return (1 + this.maxSequence) - this.ackSequence + this.sequence;
         }
     }
 }
