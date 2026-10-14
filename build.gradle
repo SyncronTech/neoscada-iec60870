@@ -1,0 +1,35 @@
+plugins {
+	id 'maven-publish'
+}
+
+ext {
+	nettyVersion = '4.1.130.Final'
+}
+
+subprojects { subProject ->
+
+	subProject.version = '14.0.0'
+	subProject.apply plugin: 'java-library'
+	subProject.apply plugin: 'maven-publish'
+
+	subProject.java {
+		sourceCompatibility = JavaVersion.VERSION_21
+		targetCompatibility = JavaVersion.VERSION_21
+	}
+
+	subProject.javadoc {
+		options {
+			addStringOption('Xdoclint:none', '-quiet')
+			source = JavaVersion.VERSION_21.toString()
+		}
+	}
+
+	subProject.repositories {
+		mavenCentral()
+	}
+
+	// Add publishing repositories here, e.g. maven { url = '...' }.
+	// publishToMavenLocal works without any.
+	subProject.ext.publishRepositories = {
+	}
+}

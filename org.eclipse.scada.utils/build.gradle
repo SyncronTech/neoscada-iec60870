@@ -1,0 +1,27 @@
+dependencies {
+
+    api group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
+    api group: 'com.google.guava', name: 'guava', version: '18.0'
+	
+	testImplementation 'junit:junit:4.12'
+	
+}
+
+group = 'org.syncrontech.neoscada'
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                description = "Syncron Tech's fork of Eclipse NeoSCADA"
+            }
+        }
+    }
+    repositories project.ext.publishRepositories
+}

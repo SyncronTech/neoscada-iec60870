@@ -1,0 +1,110 @@
+/*******************************************************************************
+ * Copyright (c) 2014 IBH SYSTEMS GmbH and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBH SYSTEMS GmbH - initial API and implementation
+ *     Syncron Tech Oy - enhancements and fixes
+ *******************************************************************************/
+package org.eclipse.neoscada.protocol.iec60870.client.data;
+
+import java.io.Serializable;
+
+public class DataModuleOptions {
+
+	private final boolean	ignoreBackgroundScan;
+
+	private final boolean	delayStart;
+
+	private final Byte		causeSourceAddress;
+
+	private DataModuleOptions(final boolean ignoreBackgroundScan, final Byte causeSourceAddress)
+	{
+		this.ignoreBackgroundScan = ignoreBackgroundScan;
+		this.causeSourceAddress = causeSourceAddress;
+		this.delayStart = false;
+	}
+
+	private DataModuleOptions(final boolean ignoreBackgroundScan, final Byte causeSourceAddress,
+			final boolean delayStart)
+	{
+		this.ignoreBackgroundScan = ignoreBackgroundScan;
+		this.causeSourceAddress = causeSourceAddress;
+		this.delayStart = delayStart;
+	}
+
+	public boolean isIgnoreBackgroundScan()
+	{
+		return this.ignoreBackgroundScan;
+	}
+
+	public Byte getCauseSourceAddress()
+	{
+		return this.causeSourceAddress;
+	}
+
+	public boolean isDelayStart()
+	{
+		return delayStart;
+	}
+
+	public static class Builder implements Serializable {
+
+		private static final long	serialVersionUID	= 1L;
+
+		private boolean				ignoreBackgroundScan;
+
+		private boolean				delayStart;
+
+		private Byte				causeSourceAddress;
+
+		public Builder()
+		{
+		}
+
+		public Builder(final DataModuleOptions options)
+		{
+			this.causeSourceAddress = options.getCauseSourceAddress();
+			this.ignoreBackgroundScan = options.isIgnoreBackgroundScan();
+			this.delayStart = options.isDelayStart();
+		}
+
+		public void setCauseSourceAddress(final Byte causeSourceAddress)
+		{
+			this.causeSourceAddress = causeSourceAddress;
+		}
+
+		public Byte getCauseSourceAddress()
+		{
+			return this.causeSourceAddress;
+		}
+
+		public void setIgnoreBackgroundScan(final boolean ignoreBackgroundScan)
+		{
+			this.ignoreBackgroundScan = ignoreBackgroundScan;
+		}
+
+		public boolean isIgnoreBackgroundScan()
+		{
+			return this.ignoreBackgroundScan;
+		}
+
+		public void setDelayStart(final boolean delayStart)
+		{
+			this.delayStart = delayStart;
+		}
+
+		public boolean isDelayStart()
+		{
+			return this.delayStart;
+		}
+
+		public DataModuleOptions build()
+		{
+			return new DataModuleOptions(this.ignoreBackgroundScan, this.causeSourceAddress, this.delayStart);
+		}
+	}
+}

@@ -1,0 +1,11 @@
+rootProject.name = 'iec'
+include 'org.eclipse.scada.utils', 
+		'org.eclipse.neoscada.protocol.iec60870',
+		'org.eclipse.neoscada.protocol.iec60870.client', 
+		'org.eclipse.neoscada.protocol.iec60870.client.data', 
+		'org.eclipse.neoscada.protocol.iec60870.client.data.testing', 
+		'org.eclipse.neoscada.protocol.iec60870.server', 
+		'org.eclipse.neoscada.protocol.iec60870.server.testing', 
+		'org.eclipse.neoscada.protocol.iec60870.server.data', 
+		'org.syncrontech.neoscada.protocol.iec60870.server.system'
+

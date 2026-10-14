@@ -1,0 +1,27 @@
+
+group = 'org.syncrontech.neoscada.protocols'
+
+dependencies {
+
+    api project(':org.eclipse.scada.utils')
+    api project(':org.eclipse.neoscada.protocol.iec60870')
+    api project(':org.eclipse.neoscada.protocol.iec60870.server')
+    api project(':org.eclipse.neoscada.protocol.iec60870.server.data')
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			pom {
+				description = "Syncron Tech's extras for Eclipse NeoSCADA"
+			}
+		}
+	}
+	repositories project.ext.publishRepositories
+}

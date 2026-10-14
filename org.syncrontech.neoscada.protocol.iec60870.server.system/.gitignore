@@ -1,0 +1,14 @@
+sonar-project.properties
+
+/.gradle
+/.idea
+
+/.settings
+/.classpath
+/.project
+/.externalToolBuilders
+
+/ext/lib/build
+
+# Ignore Gradle build output directory
+build

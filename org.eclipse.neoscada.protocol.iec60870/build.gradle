@@ -1,0 +1,30 @@
+
+group = 'org.syncrontech.neoscada.protocols'
+
+dependencies {
+
+    api project(':org.eclipse.scada.utils')
+    api group: 'io.netty', name: 'netty-transport', version: rootProject.nettyVersion
+    api group: 'io.netty', name: 'netty-codec', version: rootProject.nettyVersion
+    api group: 'io.netty', name: 'netty-buffer', version: rootProject.nettyVersion
+    api group: 'io.netty', name: 'netty-common', version: rootProject.nettyVersion
+	
+	testImplementation 'junit:junit:4.12'
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+			pom {
+				description = "Syncron Tech's fork of Eclipse NeoSCADA"
+			}
+		}
+	}
+	repositories project.ext.publishRepositories
+}
